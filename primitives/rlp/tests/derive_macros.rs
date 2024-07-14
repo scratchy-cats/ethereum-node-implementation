@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use rlp::encode::RLPEncodable;
+use rlp::encoding::RLPEncodable;
 
 #[test]
 fn encode() {

@@ -5,7 +5,7 @@ mod utils;
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse, DeriveInput, Field, Result};
-use utils::{attributesIncludeMeta, parseStruct};
+use utils::{attributesIncludeMeta, getStructFieldName, parseStruct};
 
 #[proc_macro_derive(RLPEncodable, attributes(rlp))]
 pub fn rlpEncodable(input: TokenStream) -> TokenStream {
@@ -42,7 +42,7 @@ fn implRLPEncodable(ast: &DeriveInput) -> Result<proc_macro2::TokenStream> {
   }
 
   Ok(quote! {
-    impl rlp::encode::RLPEncodable for #structName {
+    impl rlp::encoding::RLPEncodable for #structName {
       #[inline]
       fn rlpEncode(&self, buffer: &mut Vec<u8>) {
         rlp::header::RLPEncodingHeader::new(true, self.rlpEncodingPayloadByteLen())
@@ -53,7 +53,7 @@ fn implRLPEncodable(ast: &DeriveInput) -> Result<proc_macro2::TokenStream> {
       #[inline]
       fn rlpEncodingByteLen(&self) -> usize {
         let payloadByteLen = self.rlpEncodingPayloadByteLen();
-        rlp::encode::getRLPEncodingHeaderByteLenForPayloadByteLen(payloadByteLen) + payloadByteLen
+        rlp::encoding::getRLPEncodingHeaderByteLenForPayloadByteLen(payloadByteLen) + payloadByteLen
       }
     }
 
@@ -63,14 +63,4 @@ fn implRLPEncodable(ast: &DeriveInput) -> Result<proc_macro2::TokenStream> {
       }
     }
   })
-}
-
-fn getStructFieldName(index: usize, field: &syn::Field) -> proc_macro2::TokenStream {
-  if let Some(ident) = &field.ident {
-    quote! { #ident }
-  }
-  else {
-    let index = syn::Index::from(index);
-    quote! { #index }
-  }
 }

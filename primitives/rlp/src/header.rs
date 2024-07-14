@@ -1,5 +1,5 @@
 use crate::{
-  encode::{getRLPEncodingHeaderByteLenForPayloadByteLen, RLPEncodable},
+  encoding::{getRLPEncodingHeaderByteLenForPayloadByteLen, RLPEncodable},
   toBytesWithoutLeadingZeroes, EMPTY_LIST_CODE, EMPTY_STRING_CODE,
 };
 use derive_getters::Getters;

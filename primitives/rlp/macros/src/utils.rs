@@ -1,3 +1,4 @@
+use quote::quote;
 use syn::{Attribute, DataStruct, DeriveInput, Error, Meta, Result};
 
 pub(crate) fn parseStruct<'a>(
@@ -35,4 +36,14 @@ pub(crate) fn attributesIncludeMeta(attributes: &[Attribute], targetMeta: &str) 
   }
 
   false
+}
+
+pub(crate) fn getStructFieldName(index: usize, field: &syn::Field) -> proc_macro2::TokenStream {
+  if let Some(ident) = &field.ident {
+    quote! { #ident }
+  }
+  else {
+    let index = syn::Index::from(index);
+    quote! { #index }
+  }
 }
