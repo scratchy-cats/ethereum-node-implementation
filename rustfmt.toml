@@ -1,0 +1,7 @@
+tab_spaces = 2
+
+chain_width = 60
+comment_width = 100
+single_line_if_else_max_width = 100
+
+control_brace_style = "ClosingNextLine"

@@ -1,0 +1,13 @@
+[package]
+name = "rlp"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+derive-getters = "0.4.0"
+derive_more = { workspace = true }
+rlp-macros = { workspace = true }
+rustfmt = { workspace = true }
